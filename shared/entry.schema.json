@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Ritm ledger entry",
+  "type": "object",
+  "required": ["id", "date", "type", "amountMinor", "category", "counterparty", "note"],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "date": { "type": "string", "format": "date", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "type": { "enum": ["income", "expense"] },
+    "amountMinor": { "type": "integer", "minimum": 1, "maximum": 99999999999 },
+    "category": { "enum": ["projects", "support", "team", "rent", "marketing", "services", "tax", "other"] },
+    "counterparty": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "note": { "type": "string", "maxLength": 500 }
+  },
+  "allOf": [
+    { "if": { "properties": { "type": { "const": "income" } } }, "then": { "properties": { "category": { "enum": ["projects", "support"] } } } },
+    { "if": { "properties": { "type": { "const": "expense" } } }, "then": { "properties": { "category": { "enum": ["team", "rent", "marketing", "services", "tax", "other"] } } } }
+  ],
+  "additionalProperties": false
+}

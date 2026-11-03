@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ritm-analytics"
+version = "1.0.0"
+description = "Reproducible cash-flow reports for Ritm"
+requires-python = ">=3.11"
+dependencies = ["pandas>=2.2,<3", "matplotlib>=3.9,<4"]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<9"]
+
+[project.scripts]
+ritm-report = "ritm_analytics.report:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
